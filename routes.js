@@ -42,9 +42,11 @@ module.exports = function(app, io) {
 
             var room = findClientsSocket(io, data);
             if (room.length === 0) {
-
                 socket.emit('peopleinchat', {
-                    number: 0
+                    number: 1,
+                    user: "CHATBOT",
+                    avatar: "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+                    id: data
                 });
             } else if (room.length === 1) {
 
@@ -93,11 +95,26 @@ module.exports = function(app, io) {
                     var usernames = [],
                         avatars = [];
 
+                    //creating ChatBoT for the session
+                    usernames.push("CHATBOT");
+                    avatars.push(room[0].avatar);
+
+                    chat.in(data.id).emit('startChat', {
+                        boolean: true,
+                        id: data.id,
+                        users: usernames,
+                        avatars: avatars
+                    });
+
+                    usernames = [];
+                    avatars = [];
                     usernames.push(room[0].username);
                     usernames.push(socket.username);
 
                     avatars.push(room[0].avatar);
                     avatars.push(socket.avatar);
+
+
 
                     // Send the startChat event to all the people in the
                     // room, along with a list of people that are in it.
