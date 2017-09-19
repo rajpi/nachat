@@ -155,9 +155,9 @@ module.exports = function(app, io) {
         socket.on('msg', function(data) {
 
             // When the server receives a message, it sends it to the other person in the room.
-            socket.broadcast.to(socket.room).emit('receive', {
-                msg: data.msg,
-                user: data.user,
+            io.to(socket.room).emit('receive', {
+                msg: 'Yes! You are awesome!!!',
+                user: 'Chat Bot',
                 img: data.img
             });
         });

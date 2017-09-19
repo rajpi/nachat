@@ -54,7 +54,6 @@ $(function() {
 
         // on connection to server get the id of person's room
         socket.on('connect', function() {
-
             socket.emit('load', id);
         });
 
@@ -204,8 +203,6 @@ $(function() {
             showMessage("chatStarted");
 
             if (textarea.val().trim().length) {
-                createChatMessage(textarea.val(), name, img, moment());
-                scrollToBottom();
 
                 // Send the message to the other person in the chat
                 socket.emit('msg', {
@@ -213,6 +210,9 @@ $(function() {
                     user: name,
                     img: img
                 });
+
+                createChatMessage(textarea.val(), name, img, moment());
+                scrollToBottom();
 
             }
             // Empty the textarea
@@ -236,7 +236,8 @@ $(function() {
 
             var who = '';
 
-            if (user === name) {
+            // shold change class names "me" and "you"
+            if (user !== name) {
                 who = 'me';
             } else {
                 who = 'you';
