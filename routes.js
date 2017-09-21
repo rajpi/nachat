@@ -41,6 +41,8 @@ module.exports = function(app, io) {
         socket.on('load', function(data) {
 
             var room = findClientsSocket(io, data);
+            var peopleInRoom = Object.keys(io.sockets.connected).length;
+
             if (room.length === 0) {
                 socket.emit('peopleinchat', {
                     number: 1,
@@ -48,15 +50,14 @@ module.exports = function(app, io) {
                     avatar: "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
                     id: data
                 });
-            } else if (room.length === 1) {
-
+            } else if (peopleInRoom === 1) {
                 socket.emit('peopleinchat', {
-                    number: 1,
+                    number: 2,
                     user: room[0].username,
                     avatar: room[0].avatar,
                     id: data
                 });
-            } else if (room.length >= 2) {
+            } else if (peopleInRoom >= 2) {
 
                 chat.emit('tooMany', {
                     boolean: true
