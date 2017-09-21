@@ -321,8 +321,6 @@ $(function() {
                 section.children().css('display', 'none');
                 chatScreen.css('display', 'block');
 
-				// TODO Chat reply goes here
-				alert("Your data is recieved... we will reply shortly");
             } else if (status === "somebodyLeft") {
 
                 leftImage.attr("src", data.avatar);
